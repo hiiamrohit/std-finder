@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>INDIA, STD Code Finder Script in PHP, MYSQL, JQUERY</title>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<style>
+  .ui-autocomplete-loading {
+    background: white url("img/ui-anim_basic_16x16.gif") right center no-repeat;
+  }
+   .ui-autocomplete {
+    max-height: 300px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+  }
+  /* IE 6 doesn't support max-height
+   * we use height instead, but this forces the menu to always be this tall
+   */
+  * html .ui-autocomplete {
+    height: 100px;
+  }
+  </style>
+</head>
+<body>
+
+
+<h3>INDIA, STD Code Finder Script in PHP, MYSQL, JQUERY</h3>
+	<div class="ui-widget">
+  <input type="text" id="std" name="std" placeholder="Type city name or std code" style="width:550px;"><br/>
+  <span style="color:red">* Enter atleast 3 character..!! </span>
+</div>
+<br/><br/>
+
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script>
+  $(function() {
+   $( "#std" ).autocomplete({
+      source: function( request, response ) {
+        $.ajax({
+          url: "request.php",
+          dataType: "json",
+          data: {
+            q: request.term
+          },
+          success: function( data ) {
+            response( data );
+          }
+        });
+      },
+      minLength: 3,
+      select: function( event, ui ) {
+      	    // do something on select event
+        console.log(ui.item); // ui.item is  responded json from server
+      },
+      open: function() {
+                 // D0 something on open event.
+      },
+      close: function() {
+               // Do omething on close event
+      }
+    });
+  });
+  </script>
+</body>
+</html>
